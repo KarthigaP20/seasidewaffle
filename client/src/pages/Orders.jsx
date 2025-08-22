@@ -31,7 +31,7 @@ export default function Orders() {
       const data = await res.json();
 
       // Ensure shippingAddress has full fallback info
-      const formattedData = data.map(order => {
+      const formattedData = data.map((order) => {
         const sa = order.shippingAddress || {};
         const ua = order.user?.address || {};
         return {
@@ -60,25 +60,33 @@ export default function Orders() {
     fetchOrders();
     const interval = setInterval(fetchOrders, 5000);
     return () => clearInterval(interval);
-  }, );
+  });
 
-  if (loading) return <p className="p-8 text-center text-gray-700">Loading orders...</p>;
+  if (loading)
+    return <p className="p-8 text-center text-gray-700">Loading orders...</p>;
   if (error) return <p className="p-8 text-center text-rose-600">{error}</p>;
-  if (!orders.length) return <p className="p-8 text-center text-gray-700">No orders found.</p>;
+  if (!orders.length)
+    return <p className="p-8 text-center text-gray-700">No orders found.</p>;
 
   return (
     <div className="min-h-screen bg-[#f0deb7] px-6 py-12">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-extrabold mb-8 text-gray-900 text-center">My Orders</h1>
+        <h1 className="text-3xl font-extrabold mb-8 text-gray-900 text-center">
+          My Orders
+        </h1>
         <div className="space-y-6">
-          {orders.map(order => (
-            <div key={order._id} className="bg-[#fff8e7] p-6 rounded-2xl border border-yellow-800 shadow-sm">
+          {orders.map((order) => (
+            <div
+              key={order._id}
+              className="bg-[#fff8e7] p-6 rounded-2xl border border-yellow-800 shadow-sm"
+            >
               <div className="flex justify-between items-center mb-3">
                 <p className="font-bold text-gray-900">
                   Order ID: <span className="font-normal">{order._id}</span>
                 </p>
                 <p className="font-bold text-gray-900">
-                  Total: <span className="font-normal">₹{order.totalPrice}</span>
+                  Total:{" "}
+                  <span className="font-normal">₹{order.totalPrice}</span>
                 </p>
               </div>
 
@@ -87,15 +95,21 @@ export default function Orders() {
                 <p className="text-gray-700">
                   {order.shippingAddress.name} | {order.shippingAddress.phone}
                   <br />
-                  {order.shippingAddress.address}, {order.shippingAddress.city}, {order.shippingAddress.state} - {order.shippingAddress.pincode}, {order.shippingAddress.country}
+                  {order.shippingAddress.address}, {order.shippingAddress.city},{" "}
+                  {order.shippingAddress.state} -{" "}
+                  {order.shippingAddress.pincode},{" "}
+                  {order.shippingAddress.country}
                 </p>
               </div>
 
               <div className="mb-4">
                 <p className="font-semibold text-gray-800 mb-2">Items:</p>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  {order.orderItems.map(item => (
-                    <div key={item.product._id} className="flex items-center gap-3 bg-[#fff4e6] p-2 rounded-lg shadow-sm">
+                  {order.orderItems.map((item) => (
+                    <div
+                      key={item.product._id}
+                      className="flex items-center gap-3 bg-[#fff4e6] p-2 rounded-lg shadow-sm"
+                    >
                       <img
                         src={item.product.image}
                         alt={item.product.name}
@@ -103,7 +117,9 @@ export default function Orders() {
                       />
                       <div>
                         <p className="font-medium">{item.product.name}</p>
-                        <p className="text-sm text-gray-600">Qty: {item.quantity}</p>
+                        <p className="text-sm text-gray-600">
+                          Qty: {item.quantity}
+                        </p>
                         <p className="text-sm text-gray-600">₹{item.price}</p>
                       </div>
                     </div>
@@ -117,17 +133,21 @@ export default function Orders() {
                     order.deliveryStatus === "Delivered"
                       ? "bg-green-600"
                       : order.deliveryStatus === "Shipped"
-                      ? "bg-yellow-800"
-                      : order.deliveryStatus === "Out for Delivery"
-                      ? "bg-blue-600"
-                      : "bg-gray-500"
+                        ? "bg-yellow-800"
+                        : order.deliveryStatus === "Out for Delivery"
+                          ? "bg-blue-600"
+                          : "bg-gray-500"
                   }`}
                 >
                   {order.deliveryStatus || "Pending"}
                 </span>
                 <button
                   className="ml-auto px-4 py-1 bg-yellow-800 text-white rounded-xl hover:bg-yellow-900 transition"
-                  onClick={() => alert(`Your order is currently: ${order.deliveryStatus || "Pending"}`)}
+                  onClick={() =>
+                    alert(
+                      `Your order is currently: ${order.deliveryStatus || "Pending"}`
+                    )
+                  }
                 >
                   Track Order
                 </button>

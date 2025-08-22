@@ -34,12 +34,12 @@ export default function AdminUsers() {
 
     try {
       const res = await fetch(`http://localhost:5000/api/users/${id}`, {
-  method: "DELETE",
-  headers: { 
-    Authorization: `Bearer ${token}`,
-    "Content-Type": "application/json"
-  },
-});
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+      });
 
       if (!res.ok) throw new Error("Failed to delete user");
       setUsers((prev) => prev.filter((u) => u._id !== id));
@@ -60,46 +60,45 @@ export default function AdminUsers() {
     );
 
   return (
-        <div className="min-h-screen bg-[#EFCC89]">
-    <div className="max-w-7xl mx-auto px-4 py-12 ">
-      <h1 className="text-3xl font-bold mb-6 text-center text-yellow-900">
-        Manage Customers
-      </h1>
+    <div className="min-h-screen bg-[#EFCC89]">
+      <div className="max-w-7xl mx-auto px-4 py-12 ">
+        <h1 className="text-3xl font-bold mb-6 text-center text-yellow-900">
+          Manage Customers
+        </h1>
 
-      <div className="overflow-x-auto ">
-        <table className="min-w-full border border-gray-800 rounded-lg shadow-sm bg-yellow-50 text-center">
-          <thead>
-            <tr className="bg-yellow-800 text-gray-800 ">
-              <th className="p-3 border text-center ">Name</th>
-              <th className="p-3 border text-center">Email</th>
-              {/* <th className="p-3 border text-center">Orders</th> */}
-              <th className="p-3 border text-center">Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {users.map((u) => (
-              <tr
-                key={u._id}
-                className="hover:bg-yellow-50 transition-colors text-gray-700"
-              >
-                <td className="border p-3">{u.name}</td>
-                <td className="border p-3">{u.email}</td>
-               {/* <td className="border p-3 text-center">{u.orders || 0}</td> */}
-                <td className="border p-3 text-center">
-                  <button
-                    onClick={() => deleteUser(u._id)}
-                    className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
-                  >
-                    Delete
-                  </button>
-                </td>
+        <div className="overflow-x-auto ">
+          <table className="min-w-full border border-gray-800 rounded-lg shadow-sm bg-yellow-50 text-center">
+            <thead>
+              <tr className="bg-yellow-800 text-gray-800 ">
+                <th className="p-3 border text-center ">Name</th>
+                <th className="p-3 border text-center">Email</th>
+                {/* <th className="p-3 border text-center">Orders</th> */}
+                <th className="p-3 border text-center">Actions</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {users.map((u) => (
+                <tr
+                  key={u._id}
+                  className="hover:bg-yellow-50 transition-colors text-gray-700"
+                >
+                  <td className="border p-3">{u.name}</td>
+                  <td className="border p-3">{u.email}</td>
+                  {/* <td className="border p-3 text-center">{u.orders || 0}</td> */}
+                  <td className="border p-3 text-center">
+                    <button
+                      onClick={() => deleteUser(u._id)}
+                      className="px-3 py-1 bg-red-600 text-white rounded hover:bg-red-700 transition"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
       </div>
     </div>
-    </div>
-    
   );
 }

@@ -78,4 +78,7 @@ router.get("/all", async (req, res) => {
   }
 });
 
+// Google login route
+router.post("/google-login", userController.googleLogin);
+
 module.exports = router;

@@ -1,6 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { FaBars, FaTimes, FaClipboardList, FaShoppingCart, FaSignInAlt, FaUser, FaBox, FaHeart, FaSignOutAlt } from "react-icons/fa";
+import {
+  FaBars,
+  FaTimes,
+  FaClipboardList,
+  FaShoppingCart,
+  FaSignInAlt,
+  FaUser,
+  FaBox,
+  FaHeart,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import logo from "../assets/logo.png";
 
 export default function Navbar() {
@@ -18,7 +28,9 @@ export default function Navbar() {
     if (!raw) return null;
     try {
       const parsed = JSON.parse(raw);
-      return parsed && typeof parsed === "object" ? parsed : { name: String(parsed) };
+      return parsed && typeof parsed === "object"
+        ? parsed
+        : { name: String(parsed) };
     } catch {
       return { name: raw };
     }
@@ -65,7 +77,9 @@ export default function Navbar() {
 
   const goToCart = () => {
     if (!readStoredToken()) {
-      navigate("/login", { state: { message: "Please login to access your cart." } });
+      navigate("/login", {
+        state: { message: "Please login to access your cart." },
+      });
       return;
     }
     navigate("/cart");
@@ -79,27 +93,41 @@ export default function Navbar() {
   };
 
   return (
-<nav className="bg-[#fee8c0]/70 backdrop-blur sticky top-0 z-50 border-b shadow">
-
+    <nav className="bg-[#fee8c0]/70 backdrop-blur sticky top-0 z-50 border-b shadow">
       <div className="max-w-7xl mx-auto flex items-center justify-between px-4 py-3">
         {/* Logo */}
         <Link to="/" className="flex items-center gap-3">
-          <img src={logo} alt="Sea Side Waffle" className="h-10 w-10 object-contain" />
-          <span className="text-lg md:text-xl font-extrabold">Sea Side Waffle</span>
+          <img
+            src={logo}
+            alt="Sea Side Waffle"
+            className="h-10 w-10 object-contain"
+          />
+          <span className="text-lg md:text-xl font-extrabold">
+            Sea Side Waffle
+          </span>
         </Link>
 
         {/* Desktop links */}
         <div className="hidden md:flex items-center gap-6 ">
-          <Link to="/menu" className="flex items-center gap-2 hover:text-yellow-700">
+          <Link
+            to="/menu"
+            className="flex items-center gap-2 hover:text-yellow-700"
+          >
             <FaClipboardList /> <span>Menu</span>
           </Link>
 
-          <button onClick={goToCart} className="flex items-center gap-2 hover:text-yellow-700">
+          <button
+            onClick={goToCart}
+            className="flex items-center gap-2 hover:text-yellow-700"
+          >
             <FaShoppingCart /> <span>Cart</span>
           </button>
 
           {!loggedIn ? (
-            <button onClick={goToLogin} className="flex items-center gap-2 hover:text-yellow-700">
+            <button
+              onClick={goToLogin}
+              className="flex items-center gap-2 hover:text-yellow-700"
+            >
               <FaSignInAlt /> <span>Login</span>
             </button>
           ) : (
@@ -164,10 +192,13 @@ export default function Navbar() {
 
       {/* Mobile dropdown menu (inline under navbar) */}
       {menuOpen && (
-<div className="md:hidden absolute right-4 mt-2 border bg-[#f3d59b] w-fit rounded-lg shadow-lg">
-
+        <div className="md:hidden absolute right-4 mt-2 border bg-[#f3d59b] w-fit rounded-lg shadow-lg">
           <div className="px-4 py-3 flex flex-col gap-3 ">
-            <Link to="/menu" onClick={() => setMenuOpen(false)} className="flex items-center gap-2">
+            <Link
+              to="/menu"
+              onClick={() => setMenuOpen(false)}
+              className="flex items-center gap-2"
+            >
               <FaClipboardList /> Menu
             </Link>
 

@@ -80,7 +80,10 @@ export default function ProductDetail() {
       // Add new item with selected quantity
       const addRes = await fetch("http://localhost:5000/api/cart", {
         method: "POST",
-        headers: { "Content-Type": "application/json", Authorization: `Bearer ${token}` },
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
         body: JSON.stringify({ id: p._id, qty: quantity }),
       });
       if (!addRes.ok) {
@@ -108,7 +111,8 @@ export default function ProductDetail() {
     });
   };
 
-  if (loading) return <div className="p-8 text-center text-gray-700">Loading...</div>;
+  if (loading)
+    return <div className="p-8 text-center text-gray-700">Loading...</div>;
   if (err) return <div className="p-8 text-center text-rose-600">{err}</div>;
   if (!p) return null;
 
@@ -117,27 +121,44 @@ export default function ProductDetail() {
       <div className="max-w-6xl mx-auto grid md:grid-cols-2 gap-10 items-start">
         {/* Product Image */}
         <div className="rounded-2xl overflow-hidden bg-[#fff8e7] border border-yellow-800 p-4 transform transition hover:scale-105">
-          <img src={p.image} alt={p.name} className="w-full h-full object-contain rounded-xl" />
+          <img
+            src={p.image}
+            alt={p.name}
+            className="w-full h-full object-contain rounded-xl"
+          />
         </div>
 
         {/* Product Details */}
         <div className="flex flex-col justify-between">
           <div>
-            <p className="text-yellow-900 font-semibold mb-2">{p.category || "Other"}</p>
+            <p className="text-yellow-900 font-semibold mb-2">
+              {p.category || "Other"}
+            </p>
             <h1 className="text-4xl font-extrabold text-gray-900">{p.name}</h1>
-            <p className="mt-3 text-gray-700 text-lg">{p.description || "Freshly prepared and delicious."}</p>
+            <p className="mt-3 text-gray-700 text-lg">
+              {p.description || "Freshly prepared and delicious."}
+            </p>
 
             <div className="mt-4 text-gray-800 space-y-1">
-              {p.size && <p>Size / Weight: <span className="font-semibold">{p.size}</span></p>}
+              {p.size && (
+                <p>
+                  Size / Weight: <span className="font-semibold">{p.size}</span>
+                </p>
+              )}
               {p.ingredients && (
                 <p>
-                  Ingredients: <span className="font-semibold">{p.ingredients.join(", ")}</span>
+                  Ingredients:{" "}
+                  <span className="font-semibold">
+                    {p.ingredients.join(", ")}
+                  </span>
                 </p>
               )}
             </div>
 
             <div className="mt-5 flex items-center gap-6">
-              <p className="text-3xl font-extrabold text-gray-900">₹{p.price * quantity}</p>
+              <p className="text-3xl font-extrabold text-gray-900">
+                ₹{p.price * quantity}
+              </p>
               <div className="flex items-center border border-yellow-800 rounded-xl overflow-hidden">
                 <button
                   onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -145,7 +166,9 @@ export default function ProductDetail() {
                 >
                   -
                 </button>
-                <span className="px-4 py-2 bg-[#fff8e7] text-gray-900 font-semibold">{quantity}</span>
+                <span className="px-4 py-2 bg-[#fff8e7] text-gray-900 font-semibold">
+                  {quantity}
+                </span>
                 <button
                   onClick={() => setQuantity((q) => q + 1)}
                   className="px-4 py-2 bg-yellow-800 text-white font-bold hover:bg-yellow-900 transition"
@@ -173,14 +196,18 @@ export default function ProductDetail() {
               </button>
             </div>
             <div className="mt-3 text-gray-700">
-              {tab === "description" && <p>{p.description || "No description available."}</p>}
+              {tab === "description" && (
+                <p>{p.description || "No description available."}</p>
+              )}
               {tab === "ingredients" && (
-  <ul className="list-disc list-inside">
-    {p.ingredients?.length
-      ? p.ingredients.map((item, idx) => <li key={idx}>{item}</li>)
-      : <li>No ingredients listed.</li>}
-  </ul>
-)}
+                <ul className="list-disc list-inside">
+                  {p.ingredients?.length ? (
+                    p.ingredients.map((item, idx) => <li key={idx}>{item}</li>)
+                  ) : (
+                    <li>No ingredients listed.</li>
+                  )}
+                </ul>
+              )}
             </div>
           </div>
 

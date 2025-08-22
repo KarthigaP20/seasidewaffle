@@ -16,7 +16,7 @@ export default function AdminDashboard() {
         });
         if (!res.ok) throw new Error("Failed to fetch stats");
         const data = await res.json();
-        console.log("Stats:", data); 
+        console.log("Stats:", data);
 
         // Map backend data into your UI format
         setStats([
@@ -32,41 +32,41 @@ export default function AdminDashboard() {
   }, []);
 
   return (
-        <div className="p-6 min-h-screen bg-[#EFCC89]">
-    <div className="max-w-7xl mx-auto px-4 py-12">
-      <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
-      <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
-        {stats.map((stat) => (
-          <div
-            key={stat.label}
-            className="bg-yellow-600 text-gray-900 p-6 rounded-lg shadow hover:shadow-lg transition"
+    <div className="p-6 min-h-screen bg-[#EFCC89]">
+      <div className="max-w-7xl mx-auto px-4 py-12">
+        <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+        <div className="grid sm:grid-cols-2 md:grid-cols-3 gap-6 mb-12">
+          {stats.map((stat) => (
+            <div
+              key={stat.label}
+              className="bg-yellow-600 text-gray-900 p-6 rounded-lg shadow hover:shadow-lg transition"
+            >
+              <h2 className="text-lg font-semibold">{stat.label}</h2>
+              <p className="text-2xl font-bold">{stat.value}</p>
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col gap-4">
+          <Link
+            to="/admin/products"
+            className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
           >
-            <h2 className="text-lg font-semibold">{stat.label}</h2>
-            <p className="text-2xl font-bold">{stat.value}</p>
-          </div>
-        ))}
+            Manage Products
+          </Link>
+          <Link
+            to="/admin/orders"
+            className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
+          >
+            Manage Orders
+          </Link>
+          <Link
+            to="/admin/users"
+            className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
+          >
+            Manage Customers
+          </Link>
+        </div>
       </div>
-      <div className="flex flex-col gap-4">
-        <Link
-          to="/admin/products"
-          className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
-        >
-          Manage Products
-        </Link>
-        <Link
-          to="/admin/orders"
-          className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
-        >
-          Manage Orders
-        </Link>
-        <Link
-          to="/admin/users"
-          className="bg-yellow-700 hover:bg-yellow-800 px-6 py-3 rounded font-bold shadow"
-        >
-          Manage Customers
-        </Link>
-      </div>
-    </div>
     </div>
   );
 }

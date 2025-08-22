@@ -92,7 +92,7 @@ export default function Checkout() {
         user: userData._id,
         orderItems,
         shippingAddress: {
-            name: formData.name, 
+          name: formData.name,
           address: formData.address,
           city: formData.city,
           state: formData.state,
@@ -127,102 +127,109 @@ export default function Checkout() {
   };
 
   if (loading) return <p className="text-center mt-10">Loading...</p>;
-  if (!cart.length) return <p className="text-center mt-10">No product to checkout.</p>;
+  if (!cart.length)
+    return <p className="text-center mt-10">No product to checkout.</p>;
 
   return (
     <div className="min-h-screen bg-[#F0DEB7] p-12">
-    <div className="max-w-3xl mx-auto p-6 bg-[#faeed8]  rounded-xl shadow-md">
-      <h1 className="text-3xl font-bold mb-6 text-gray-800">Checkout</h1>
+      <div className="max-w-3xl mx-auto p-6 bg-[#faeed8]  rounded-xl shadow-md">
+        <h1 className="text-3xl font-bold mb-6 text-gray-800">Checkout</h1>
 
-      {/* Order Summary */}
-      <div className="border rounded-xl p-4 mb-6 bg-[#fff4e8]">
-        <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
-        {cart.map((item) => (
-          <div key={item.id || item._id} className="flex justify-between mb-2">
-            <span>{item.name}</span>
-            <span>₹{item.price * (item.qty || 1)}</span>
+        {/* Order Summary */}
+        <div className="border rounded-xl p-4 mb-6 bg-[#fff4e8]">
+          <h2 className="text-xl font-semibold mb-2">Order Summary</h2>
+          {cart.map((item) => (
+            <div
+              key={item.id || item._id}
+              className="flex justify-between mb-2"
+            >
+              <span>{item.name}</span>
+              <span>₹{item.price * (item.qty || 1)}</span>
+            </div>
+          ))}
+          <div className="border-t mt-2 pt-2 font-bold flex justify-between">
+            <span>Total:</span>
+            <span>₹{totalPrice}</span>
           </div>
-        ))}
-        <div className="border-t mt-2 pt-2 font-bold flex justify-between">
-          <span>Total:</span>
-          <span>₹{totalPrice}</span>
         </div>
-      </div>
 
-      {/* Shipping Form */}
-      <form onSubmit={handleSubmit} className="space-y-4 bg-[#fff4e6] p-6 rounded-xl shadow-inner">
-        <input
-          type="text"
-          name="name"
-          placeholder="Full Name"
-          value={formData.name}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="tel"
-          name="phone"
-          placeholder="Phone Number"
-          value={formData.phone}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="text"
-          name="address"
-          placeholder="Address"
-          value={formData.address}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="text"
-          name="city"
-          placeholder="City"
-          value={formData.city}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="text"
-          name="state"
-          placeholder="State"
-          value={formData.state}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="text"
-          name="pincode"
-          placeholder="Pincode"
-          value={formData.pincode}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-        <input
-          type="text"
-          name="country"
-          placeholder="Country"
-          value={formData.country}
-          onChange={handleChange}
-          required
-          className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
-        />
-
-        <button
-          type="submit"
-          className="w-full bg-yellow-700 hover:bg-yellow-800 text-gray-900 font-bold py-3 rounded-lg shadow"
+        {/* Shipping Form */}
+        <form
+          onSubmit={handleSubmit}
+          className="space-y-4 bg-[#fff4e6] p-6 rounded-xl shadow-inner"
         >
-          {loading ? "Placing Order..." : "Place Order"}
-        </button>
-      </form>
-    </div>
+          <input
+            type="text"
+            name="name"
+            placeholder="Full Name"
+            value={formData.name}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="tel"
+            name="phone"
+            placeholder="Phone Number"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="text"
+            name="address"
+            placeholder="Address"
+            value={formData.address}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="text"
+            name="city"
+            placeholder="City"
+            value={formData.city}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="text"
+            name="state"
+            placeholder="State"
+            value={formData.state}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="text"
+            name="pincode"
+            placeholder="Pincode"
+            value={formData.pincode}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+          <input
+            type="text"
+            name="country"
+            placeholder="Country"
+            value={formData.country}
+            onChange={handleChange}
+            required
+            className="border p-3 w-full rounded-lg focus:ring-2 focus:ring-yellow-800"
+          />
+
+          <button
+            type="submit"
+            className="w-full bg-yellow-700 hover:bg-yellow-800 text-gray-900 font-bold py-3 rounded-lg shadow"
+          >
+            {loading ? "Placing Order..." : "Place Order"}
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

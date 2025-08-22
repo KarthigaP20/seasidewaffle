@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 
 export default function Cart() {
@@ -18,7 +18,7 @@ export default function Cart() {
   }, [token, navigate]);
 
   // Fetch cart from backend
-  const fetchCart = async () => {
+  const fetchCart = useCallback(async () => {
     try {
       setLoading(true);
       const res = await fetch("http://localhost:5000/api/cart", {
@@ -38,13 +38,13 @@ export default function Cart() {
     } finally {
       setLoading(false);
     }
-  };
+  },[token]);
 
   useEffect(() => {
     if (token) {
       fetchCart();
     }
-  },[token]);
+  }, [token,fetchCart]);
 
   // Update quantity
   const updateQuantity = async (productId, newQty) => {
@@ -97,15 +97,16 @@ export default function Cart() {
 
   if (loading)
     return <p className="p-8 text-center text-gray-700">Loading cart...</p>;
-  if (error)
-    return <p className="p-8 text-center text-rose-600">{error}</p>;
+  if (error) return <p className="p-8 text-center text-rose-600">{error}</p>;
   if (!cart.length)
     return <p className="p-8 text-center text-gray-700">Your cart is empty.</p>;
 
   return (
     <div className="min-h-screen bg-[#faeed8] px-6 py-12">
       <div className="max-w-5xl mx-auto">
-        <h1 className="text-3xl font-extrabold mb-8 text-gray-900">Your Cart</h1>
+        <h1 className="text-3xl font-extrabold mb-8 text-gray-900">
+          Your Cart
+        </h1>
 
         <div className="space-y-6">
           {cart.map((item) => (
@@ -129,9 +130,7 @@ export default function Cart() {
 
               <div className="flex items-center gap-3 mt-4 sm:mt-0">
                 <button
-                  onClick={() =>
-                    updateQuantity(item.id, (item.qty || 1) - 1)
-                  }
+                  onClick={() => updateQuantity(item.id, (item.qty || 1) - 1)}
                   className="px-3 py-1 bg-yellow-800 text-white font-bold rounded-lg hover:bg-yellow-900 transition"
                 >
                   -
@@ -140,9 +139,7 @@ export default function Cart() {
                   {item.qty || 1}
                 </span>
                 <button
-                  onClick={() =>
-                    updateQuantity(item.id, (item.qty || 1) + 1)
-                  }
+                  onClick={() => updateQuantity(item.id, (item.qty || 1) + 1)}
                   className="px-3 py-1 bg-yellow-800 text-white font-bold rounded-lg hover:bg-yellow-900 transition"
                 >
                   +

@@ -31,7 +31,9 @@ export default function ProductCard({ product, showToast }) {
   const handleOrderNow = () => {
     if (!token) {
       // Redirect to login, pass state to remember product for checkout
-      navigate("/login", { state: { from: `/checkout/${product._id}`, product } });
+      navigate("/login", {
+        state: { from: `/checkout/${product._id}`, product },
+      });
       return;
     }
 
@@ -40,7 +42,11 @@ export default function ProductCard({ product, showToast }) {
 
   return (
     <div className="relative border rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300">
-      <img src={product.image} alt={product.name} className="w-full h-48 object-cover rounded" />
+      <img
+        src={product.image}
+        alt={product.name}
+        className="w-full h-48 object-cover rounded"
+      />
       <h3 className="font-bold mt-2">{product.name}</h3>
       <p className="text-gray-600 mt-1">₹{product.price}</p>
       <div className="mt-4 flex gap-2">

@@ -26,8 +26,10 @@ export default function Menu() {
     fetchProducts();
   }, []);
 
-   const categories = useMemo(() => {
-    const uniqueCategories = [...new Set(products.map((p) => p.category?.trim() || "Other"))];
+  const categories = useMemo(() => {
+    const uniqueCategories = [
+      ...new Set(products.map((p) => p.category?.trim() || "Other")),
+    ];
     return ["all", ...uniqueCategories];
   }, [products]);
 
@@ -35,7 +37,8 @@ export default function Menu() {
     const query = searchQuery.trim().toLowerCase();
     return products.filter((p) => {
       const matchesSearch = !query || p.name?.toLowerCase().includes(query);
-      const matchesCategory = category === "all" || (p.category || "Other") === category;
+      const matchesCategory =
+        category === "all" || (p.category || "Other") === category;
       return matchesSearch && matchesCategory;
     });
   }, [products, searchQuery, category]);
@@ -83,8 +86,12 @@ export default function Menu() {
                 alt={product.name}
                 className="w-full h-48 object-contain"
               />
-              <h3 className="mt-3 font-bold text-gray-900 text-center">{product.name}</h3>
-              <p className="mt-2 font-semibold text-gray-900 text-center">₹{product.price}</p>
+              <h3 className="mt-3 font-bold text-gray-900 text-center">
+                {product.name}
+              </h3>
+              <p className="mt-2 font-semibold text-gray-900 text-center">
+                ₹{product.price}
+              </p>
               <button
                 onClick={() => navigate(`/product/${product._id}`)}
                 className="mt-4 w-full bg-yellow-700 hover:bg-yellow-900 text-gray-900 font-bold py-2 rounded-xl"

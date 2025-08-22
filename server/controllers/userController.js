@@ -152,6 +152,51 @@ const verifyLoginOtp = async (req, res) => {
   }
 };
 
+// ------------------------
+// Google Login
+// ------------------------
+const googleLogin = async (req, res) => {
+  try {
+    const { email, name } = req.body;
+    if (!email || !name) return res.status(400).json({ message: "Email and name required" });
+
+    // Check if user exists
+    let user = await User.findOne({ email });
+    if (!user) {
+      // Reject unregistered users
+      return res.status(400).json({ message: "This email is not registered. Please signup first." });
+    }
+
+    // Ensure admin flag is correct
+    if (email.toLowerCase() === "seasidewaffle@gmail.com") {
+      if (!user.isAdmin) {
+        user.isAdmin = true;
+        await user.save();
+      }
+    } else {
+      if (user.isAdmin) {
+        user.isAdmin = false;
+        await user.save();
+      }
+    }
+
+    // Generate JWT
+    const token = jwt.sign(
+      { id: user._id, isAdmin: user.isAdmin },
+      process.env.JWT_SECRET,
+      { expiresIn: "7d" }
+    );
+
+    res.json({
+      user: { id: user._id, name: user.name, email: user.email, isAdmin: user.isAdmin },
+      token,
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Google login failed" });
+  }
+};
+
 
 // ------------------------
 // Protect middleware
@@ -308,6 +353,7 @@ module.exports = {
   registerUser,
   sendLoginOtp,
   verifyLoginOtp,
+  googleLogin, 
   protect,
   getMe,
   updatePersonal,

@@ -28,7 +28,8 @@ function Signup() {
 
     if (!username.trim()) return setErr("Username is required.");
     if (!validateEmail(email)) return setErr("Invalid email format.");
-    if (password.length < 6) return setErr("Password must be at least 6 characters.");
+    if (password.length < 6)
+      return setErr("Password must be at least 6 characters.");
     if (password !== confirmPassword) return setErr("Passwords do not match.");
 
     try {

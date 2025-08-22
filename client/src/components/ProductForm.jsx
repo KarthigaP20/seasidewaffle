@@ -9,7 +9,9 @@ export default function ProductForm({ product = {}, onSave }) {
   const [available, setAvailable] = useState(product.available ?? true);
   const [description, setDescription] = useState(product.description || "");
   const [ingredients, setIngredients] = useState(product.ingredients || []);
-  const [categories, setCategories] = useState([]); // NEW: store existing categories
+  const [categories, setCategories] = useState([]);
+  const [file, setFile] = useState(null);
+  const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
     setName(product.name || "");
@@ -21,14 +23,15 @@ export default function ProductForm({ product = {}, onSave }) {
     setDescription(product.description || "");
     setIngredients(product.ingredients || []);
 
-    // Fetch categories from backend products
+    // Fetch categories
     const fetchCategories = async () => {
       try {
         const res = await fetch("http://localhost:5000/api/products");
         if (res.ok) {
           const data = await res.json();
-          // extract unique categories
-          const unique = [...new Set(data.map((p) => p.category?.trim() || "Other"))];
+          const unique = [
+            ...new Set(data.map((p) => p.category?.trim() || "Other")),
+          ];
           setCategories(unique);
         }
       } catch (err) {
@@ -38,9 +41,44 @@ export default function ProductForm({ product = {}, onSave }) {
     fetchCategories();
   }, [product]);
 
-  const handleSubmit = (e) => {
+  const handleFileChange = (e) => {
+    if (e.target.files[0]) setFile(e.target.files[0]);
+  };
+
+  const uploadFile = async () => {
+    if (!file) return null;
+    const formData = new FormData();
+    formData.append("file", file);
+    setUploading(true);
+    try {
+      const res = await fetch("http://localhost:5000/api/upload/product", {
+        method: "POST",
+        body: formData,
+      });
+      const data = await res.json();
+      setUploading(false);
+      if (res.ok) return `http://localhost:5000${data.path}`;
+      else {
+        alert("Upload failed");
+        return null;
+      }
+    } catch (err) {
+      setUploading(false);
+      console.error(err);
+      alert("Upload error");
+      return null;
+    }
+  };
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Ensure ingredients is an array
+
+    let uploadedImage = image;
+    if (file) {
+      const uploadedPath = await uploadFile();
+      if (uploadedPath) uploadedImage = uploadedPath;
+    }
+
     const ingredientsArray = Array.isArray(ingredients)
       ? ingredients
       : ingredients
@@ -53,7 +91,7 @@ export default function ProductForm({ product = {}, onSave }) {
       name,
       price: Number(price),
       category,
-      image,
+      image: uploadedImage,
       featured,
       available,
       description: description || undefined,
@@ -85,13 +123,12 @@ export default function ProductForm({ product = {}, onSave }) {
         step="0.01"
       />
 
-      {/* UPDATED CATEGORY INPUT WITH DATALIST */}
       <input
         type="text"
         placeholder="Category"
         value={category}
         onChange={(e) => setCategory(e.target.value)}
-        list="category-options" // links to datalist
+        list="category-options"
         className="w-full border border-yellow-800 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800"
         required
       />
@@ -101,6 +138,7 @@ export default function ProductForm({ product = {}, onSave }) {
         ))}
       </datalist>
 
+      {/* Image URL */}
       <input
         type="text"
         placeholder="Image URL"
@@ -108,6 +146,16 @@ export default function ProductForm({ product = {}, onSave }) {
         onChange={(e) => setImage(e.target.value)}
         className="w-full border border-yellow-800 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800"
       />
+
+      {/* File Upload */}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleFileChange}
+        className="w-full border border-yellow-800 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800"
+      />
+      {uploading && <p>Uploading image...</p>}
+
       <textarea
         placeholder="Description (optional)"
         value={description}
@@ -117,17 +165,27 @@ export default function ProductForm({ product = {}, onSave }) {
       />
       <textarea
         placeholder="Ingredients (optional, comma-separated)"
-        value={Array.isArray(ingredients) ? ingredients.join(", ") : ingredients}
+        value={
+          Array.isArray(ingredients) ? ingredients.join(", ") : ingredients
+        }
         onChange={(e) => setIngredients(e.target.value)}
         className="w-full border border-yellow-800 px-4 py-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-800"
         rows={2}
       />
       <label className="flex items-center gap-2">
-        <input type="checkbox" checked={featured} onChange={() => setFeatured(!featured)} />
+        <input
+          type="checkbox"
+          checked={featured}
+          onChange={() => setFeatured(!featured)}
+        />
         Featured Product
       </label>
       <label className="flex items-center gap-2">
-        <input type="checkbox" checked={available} onChange={() => setAvailable(!available)} />
+        <input
+          type="checkbox"
+          checked={available}
+          onChange={() => setAvailable(!available)}
+        />
         Available
       </label>
       <button

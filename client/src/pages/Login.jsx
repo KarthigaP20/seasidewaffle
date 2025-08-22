@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
+import { auth, provider } from "../firebase"; // import firebase auth
+import { signInWithPopup } from "firebase/auth";
+import { FaGoogle } from "react-icons/fa";
+
 function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -33,17 +37,21 @@ function Login() {
     return () => clearInterval(interval);
   }, [otpSent, timer]);
 
+  // ----------------- OTP HANDLERS -----------------
   const sendOtp = async () => {
     setError("");
     if (!validateEmail(email)) return setError("Invalid email format.");
 
     try {
       setSendingOtp(true);
-      const res = await fetch("http://localhost:5000/api/users/send-login-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email }),
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/users/send-login-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email }),
+        }
+      );
       const data = await res.json();
 
       if (!res.ok) {
@@ -72,11 +80,14 @@ function Login() {
 
     try {
       setVerifyingOtp(true);
-      const res = await fetch("http://localhost:5000/api/users/verify-login-otp", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, otp }),
-      });
+      const res = await fetch(
+        "http://localhost:5000/api/users/verify-login-otp",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ email, otp }),
+        }
+      );
       const data = await res.json();
 
       if (!res.ok) return setError(data.message || "OTP verification failed");
@@ -93,10 +104,37 @@ function Login() {
     }
   };
 
+  // ----------------- GOOGLE LOGIN -----------------
+  const googleLogin = async () => {
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+      const email = user.email;
+      const name = user.displayName;
+
+      const res = await fetch("http://localhost:5000/api/users/google-login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ email, name }),
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.message || "Google login failed");
+
+      localStorage.setItem("token", data.token);
+      localStorage.setItem("user", JSON.stringify(data.user));
+      navigate("/");
+    } catch (err) {
+      console.error(err);
+      setError(err.message || "Google login failed");
+    }
+  };
+
   return (
     <div className="flex justify-center items-center min-h-screen bg-[#faeed8]  px-4">
       <div className="p-8 md:p-10 bg-[#f4dcb1] rounded-2xl shadow-2xl w-full max-w-md">
-        <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center">Login</h2>
+        <h2 className="text-3xl font-bold mb-6 text-gray-900 text-center">
+          Login
+        </h2>
 
         {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
 
@@ -135,20 +173,32 @@ function Login() {
             </button>
 
             <p className="text-center text-gray-700 mt-2">
-              {timer > 0
-                ? `Resend OTP in ${timer}s`
-                : (
-                    <button
-                      onClick={() => { setOtp(""); sendOtp(); setSendButtonText("OTP Sent"); }}
-                      disabled={sendingOtp}
-                      className="text-yellow-600 font-semibold underline cursor-pointer bg-transparent border-0"
-                    >
-                      Resend OTP
-                    </button>
-                  )}
+              {timer > 0 ? (
+                `Resend OTP in ${timer}s`
+              ) : (
+                <button
+                  onClick={() => {
+                    setOtp("");
+                    sendOtp();
+                    setSendButtonText("OTP Sent");
+                  }}
+                  disabled={sendingOtp}
+                  className="text-yellow-600 font-semibold underline cursor-pointer bg-transparent border-0"
+                >
+                  Resend OTP
+                </button>
+              )}
             </p>
           </>
         )}
+        {/* -------- Google Sign-In -------- */}
+        <button
+          onClick={googleLogin}
+          className="w-full bg-white hover:bg-gray-100 text-black font-semibold py-3 rounded-lg mb-4 shadow-sm transition-all duration-200 mt-4 flex items-center justify-center gap-2"
+        >
+          <FaGoogle size={20} />
+          Sign in with Google
+        </button>
 
         <p className="mt-4 text-center text-gray-700">
           New user?{" "}

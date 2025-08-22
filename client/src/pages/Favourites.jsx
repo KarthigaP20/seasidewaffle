@@ -74,21 +74,30 @@ export default function Favourites() {
   }, [favs]);
 
   if (loading)
-    return <p className="p-8 text-center text-gray-700">Loading favourites...</p>;
-  if (error)
-    return <p className="p-8 text-center text-rose-600">{error}</p>;
+    return (
+      <p className="p-8 text-center text-gray-700">Loading favourites...</p>
+    );
+  if (error) return <p className="p-8 text-center text-rose-600">{error}</p>;
   if (!products.length)
-    return <p className="p-8 text-center text-gray-600">You don’t have any favourites yet.</p>;
+    return (
+      <p className="p-8 text-center text-gray-600">
+        You don’t have any favourites yet.
+      </p>
+    );
 
   return (
     <div className="min-h-screen bg-[#faeed8] px-6 py-12">
-      <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">My Favourites</h1>
+      <h1 className="text-3xl font-bold text-gray-900 mb-8 text-center">
+        My Favourites
+      </h1>
       <div className="max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6">
         {products.map((p) => (
           <div
             key={p._id}
             className="bg-[#fff8e7] rounded-2xl shadow-md overflow-hidden border border-yellow-800 hover:scale-105 transform transition cursor-pointer"
-            onClick={() => navigate(`/product/${p._id}`, { state: { product: p } })}
+            onClick={() =>
+              navigate(`/product/${p._id}`, { state: { product: p } })
+            }
           >
             <div className="aspect-[4/3] w-full overflow-hidden">
               <img

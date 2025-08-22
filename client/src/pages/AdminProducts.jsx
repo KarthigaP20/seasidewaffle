@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import ProductForm from "../components/ProductForm"; 
+import ProductForm from "../components/ProductForm";
 import heroImg from "../assets/hero.jpg";
 
 export default function AdminProducts() {
@@ -27,11 +27,14 @@ export default function AdminProducts() {
     try {
       let response;
       if (editingProduct) {
-        response = await fetch(`http://localhost:5000/api/products/${editingProduct._id}`, {
-          method: "PUT",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify(productData),
-        });
+        response = await fetch(
+          `http://localhost:5000/api/products/${editingProduct._id}`,
+          {
+            method: "PUT",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(productData),
+          }
+        );
       } else {
         response = await fetch("http://localhost:5000/api/products", {
           method: "POST",
@@ -41,7 +44,8 @@ export default function AdminProducts() {
       }
 
       const savedProduct = await response.json();
-      if (!response.ok) throw new Error(savedProduct.message || "Failed to save");
+      if (!response.ok)
+        throw new Error(savedProduct.message || "Failed to save");
 
       if (editingProduct) {
         setProducts((prev) =>
@@ -93,7 +97,9 @@ export default function AdminProducts() {
         </button>
       )}
 
-      {showForm && <ProductForm product={editingProduct || {}} onSave={handleSave} />}
+      {showForm && (
+        <ProductForm product={editingProduct || {}} onSave={handleSave} />
+      )}
 
       {!showForm && (
         <table className="w-full border border-gray-200">
@@ -110,32 +116,36 @@ export default function AdminProducts() {
             {products.map((p) => (
               <tr key={p._id}>
                 <td className="border p-2 text-center">
-                  <img src={p.image || heroImg} alt={p.name} className="h-16 w-16 object-cover mx-auto rounded" />
+                  <img
+                    src={p.image || heroImg}
+                    alt={p.name}
+                    className="h-16 w-16 object-cover mx-auto rounded"
+                  />
                 </td>
-                
+
                 <td className="border p-2 text-center">{p.name}</td>
                 <td className="border p-2 text-center">₹{p.price}</td>
                 <td className="border p-2 text-center">{p.category}</td>
-                 {/* Actions column → center buttons */}
-      <td className="border p-2 text-center">
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={() => handleEdit(p)}
-            className="bg-green-800 px-3 py-1 rounded text-white"
-          >
-            Edit
-          </button>
-          <button
-            onClick={() => handleDelete(p._id)}
-            className="bg-red-800 px-3 py-1 rounded text-white"
-          >
-            Delete
-          </button>
-        </div>
-      </td>
-    </tr>
-  ))}
-</tbody>
+                {/* Actions column → center buttons */}
+                <td className="border p-2 text-center">
+                  <div className="flex justify-center gap-2">
+                    <button
+                      onClick={() => handleEdit(p)}
+                      className="bg-green-800 px-3 py-1 rounded text-white"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDelete(p._id)}
+                      className="bg-red-800 px-3 py-1 rounded text-white"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       )}
     </div>
