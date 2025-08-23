@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
 export default function ProductDetail() {
   const { id } = useParams();
@@ -19,7 +20,7 @@ export default function ProductDetail() {
     if (!token) return;
     const checkCart = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/cart", {
+        const res = await fetch(`${API_BASE}/api/cart`, {
           headers: { Authorization: `Bearer ${token}` },
         });
         if (!res.ok) return;
@@ -38,7 +39,7 @@ export default function ProductDetail() {
     if (p) return;
     (async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${API_BASE}/api/products/${id}`);
         if (!res.ok) throw new Error("Failed to load product");
         const data = await res.json();
         if (data.ingredients) {
@@ -64,7 +65,7 @@ export default function ProductDetail() {
 
     try {
       // Fetch current cart
-      const cartRes = await fetch("http://localhost:5000/api/cart", {
+      const cartRes = await fetch(`${API_BASE}/api/cart`,{
         headers: { Authorization: `Bearer ${token}` },
       });
       const cartData = await cartRes.json();
@@ -78,7 +79,7 @@ export default function ProductDetail() {
       }
 
       // Add new item with selected quantity
-      const addRes = await fetch("http://localhost:5000/api/cart", {
+      const addRes = await fetch(`${API_BASE}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

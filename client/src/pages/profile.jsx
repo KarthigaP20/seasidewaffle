@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
 export default function Profile() {
   const token = localStorage.getItem("token");
@@ -28,7 +29,7 @@ export default function Profile() {
   // Fetch profile
   const fetchProfile = useCallback(async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/users/me", {
+      const res = await fetch(`${API_BASE}/api/users/me`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
@@ -70,7 +71,7 @@ export default function Profile() {
   const handleSavePersonal = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/users/update-personal",
+        `${API_BASE}/api/users/update-personal`,
         {
           method: "PATCH",
           headers: {
@@ -97,7 +98,7 @@ export default function Profile() {
   const handleSaveAddress = async () => {
     try {
       const res = await fetch(
-        "http://localhost:5000/api/users/update-address",
+        `${API_BASE}/api/users/update-address`,
         {
           method: "PATCH",
           headers: {

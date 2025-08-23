@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import { API_BASE } from "../apiConfig";
 export default function ProductForm({ product = {}, onSave }) {
   const [name, setName] = useState(product.name || "");
   const [price, setPrice] = useState(product.price || "");
@@ -26,7 +26,7 @@ export default function ProductForm({ product = {}, onSave }) {
     // Fetch categories
     const fetchCategories = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch(`${API_BASE}/api/products`);
         if (res.ok) {
           const data = await res.json();
           const unique = [
@@ -51,13 +51,13 @@ export default function ProductForm({ product = {}, onSave }) {
     formData.append("file", file);
     setUploading(true);
     try {
-      const res = await fetch("http://localhost:5000/api/upload/product", {
+      const res = await fetch(`${API_BASE}/api/upload/product`, {
         method: "POST",
         body: formData,
       });
       const data = await res.json();
       setUploading(false);
-      if (res.ok) return `http://localhost:5000${data.path}`;
+      if (res.ok) return `${API_BASE}${data.path}`;
       else {
         alert("Upload failed");
         return null;

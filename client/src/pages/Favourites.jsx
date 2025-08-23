@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig";
 // Helper: decode JWT to get user id
 function parseJwt(token) {
   try {
@@ -60,7 +60,7 @@ export default function Favourites() {
     }
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products");
+        const res = await fetch(`${API_BASE}/api/products`);
         if (!res.ok) throw new Error("Failed to fetch products");
         const allProducts = await res.json();
         const favProducts = allProducts.filter((p) => favs.includes(p._id));

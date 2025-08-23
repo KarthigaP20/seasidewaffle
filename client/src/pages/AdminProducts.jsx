@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import ProductForm from "../components/ProductForm";
 import heroImg from "../assets/hero.jpg";
-
+import { API_BASE } from "../apiConfig";
 export default function AdminProducts() {
   const [products, setProducts] = useState([]);
   const [showForm, setShowForm] = useState(false);
@@ -10,7 +10,7 @@ export default function AdminProducts() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch("http://localhost:5000/api/products", {
+        const res = await fetch(`${API_BASE}/api/products`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         if (!res.ok) throw new Error("Failed to fetch products");
@@ -28,7 +28,7 @@ export default function AdminProducts() {
       let response;
       if (editingProduct) {
         response = await fetch(
-          `http://localhost:5000/api/products/${editingProduct._id}`,
+          `${API_BASE}/api/products/${editingProduct._id}`, 
           {
             method: "PUT",
             headers: { "Content-Type": "application/json" },
@@ -36,7 +36,7 @@ export default function AdminProducts() {
           }
         );
       } else {
-        response = await fetch("http://localhost:5000/api/products", {
+        response = await fetch(`${API_BASE}/api/products`, {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(productData),
@@ -70,7 +70,7 @@ export default function AdminProducts() {
   const handleDelete = async (id) => {
     if (!window.confirm("Delete this product?")) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/products/${id}`, {
+      const res = await fetch(`${API_BASE}/api/products/${id}`, {
         method: "DELETE",
         headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
       });

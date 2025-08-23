@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-
+import { API_BASE } from "../apiConfig";
 export default function AdminUsers() {
   const [users, setUsers] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -8,7 +8,7 @@ export default function AdminUsers() {
   // Fetch all users (public temporary route)
   const fetchUsers = async () => {
     try {
-      const res = await fetch("http://localhost:5000/api/users/all");
+      const res = await fetch(`${API_BASE}/api/users/all`);
       if (!res.ok) throw new Error("Failed to fetch users");
       const data = await res.json();
       setUsers(data);
@@ -33,7 +33,7 @@ export default function AdminUsers() {
     if (!window.confirm("Are you sure you want to delete this user?")) return;
 
     try {
-      const res = await fetch(`http://localhost:5000/api/users/${id}`, {
+      const res = await fetch(`${API_BASE}/api/users/${id}`,  {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

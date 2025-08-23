@@ -13,6 +13,7 @@ import {
 } from "react-icons/fa";
 import logo from "../assets/logo.png";
 
+
 export default function Navbar() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [accountOpen, setAccountOpen] = useState(false);

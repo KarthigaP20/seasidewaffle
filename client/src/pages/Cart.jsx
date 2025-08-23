@@ -1,6 +1,6 @@
 import { useEffect, useState,useCallback } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig";
 export default function Cart() {
   const navigate = useNavigate();
   const [cart, setCart] = useState([]);
@@ -21,7 +21,7 @@ export default function Cart() {
   const fetchCart = useCallback(async () => {
     try {
       setLoading(true);
-      const res = await fetch("http://localhost:5000/api/cart", {
+      const res = await fetch(`${API_BASE}/api/cart`, {
         headers: {
           "Content-Type": "application/json",
           Authorization: `Bearer ${token}`,
@@ -50,7 +50,7 @@ export default function Cart() {
   const updateQuantity = async (productId, newQty) => {
     if (newQty < 1) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/cart/${productId}`, {
+      const res = await fetch(`${API_BASE}/api/cart/${productId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -74,7 +74,7 @@ export default function Cart() {
   // Remove item
   const removeItem = async (productId) => {
     try {
-      const res = await fetch(`http://localhost:5000/api/cart/${productId}`, {
+      const res = await fetch(`${API_BASE}/api/cart/${productId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

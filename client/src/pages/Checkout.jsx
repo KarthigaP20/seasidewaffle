@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig";
 export default function Checkout() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +29,7 @@ export default function Checkout() {
 
     const fetchUser = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/users/me", {
+        const res = await fetch(`${API_BASE}/api/users/me`,  {
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await res.json();
@@ -60,7 +60,7 @@ export default function Checkout() {
 
     const fetchProduct = async () => {
       try {
-        const res = await fetch(`http://localhost:5000/api/products/${id}`);
+        const res = await fetch(`${API_BASE}/api/products/${id}`);
         const data = await res.json();
         setCart([{ ...data, qty: 1 }]);
         setTotalPrice(data.price);
@@ -104,7 +104,7 @@ export default function Checkout() {
         paymentMethod: "Cash on Delivery",
       };
 
-      const res = await fetch("http://localhost:5000/api/orders", {
+      const res = await fetch(`${API_BASE}/api/orders`,{
         method: "POST",
         headers: {
           "Content-Type": "application/json",

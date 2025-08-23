@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig"; 
 import { auth, provider } from "../firebase"; // import firebase auth
 import { signInWithPopup } from "firebase/auth";
 import { FaGoogle } from "react-icons/fa";
@@ -45,7 +45,7 @@ function Login() {
     try {
       setSendingOtp(true);
       const res = await fetch(
-        "http://localhost:5000/api/users/send-login-otp",
+       `${API_BASE}/api/users/send-login-otp`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -81,7 +81,7 @@ function Login() {
     try {
       setVerifyingOtp(true);
       const res = await fetch(
-        "http://localhost:5000/api/users/verify-login-otp",
+        `${API_BASE}/api/users/verify-login-otp`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
@@ -112,7 +112,7 @@ function Login() {
       const email = user.email;
       const name = user.displayName;
 
-      const res = await fetch("http://localhost:5000/api/users/google-login", {
+      const res = await fetch(`${API_BASE}/api/users/google-login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, name }),

@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { API_BASE } from "../apiConfig";
 
 export default function Orders() {
   const [orders, setOrders] = useState([]);
@@ -24,7 +25,7 @@ export default function Orders() {
       const payload = JSON.parse(atob(token.split(".")[1]));
       const userId = payload.id;
 
-      const res = await fetch(`http://localhost:5000/api/orders/${userId}`, {
+      const res = await fetch(`${API_BASE}/api/orders/${userId}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (!res.ok) throw new Error("Failed to fetch orders");

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig";
 export default function AdminDashboard() {
   const [stats, setStats] = useState([
     { label: "Total Orders", value: 0 },
@@ -11,7 +11,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/admin/stats", {
+        const res = await fetch(`${API_BASE}/api/admin/stats`, {
           headers: { Authorization: `Bearer ${localStorage.getItem("token")}` },
         });
         if (!res.ok) throw new Error("Failed to fetch stats");

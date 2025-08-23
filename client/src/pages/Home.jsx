@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import heroImg from "../assets/hero.jpg";
+import { API_BASE } from "../apiConfig";
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -58,7 +59,7 @@ export default function Home() {
   useEffect(() => {
     (async () => {
       try {
-        const res = await fetch("http://localhost:5000/api/products/featured");
+       const res = await fetch(`${API_BASE}/api/products/featured`);
         if (!res.ok) throw new Error("Failed to load featured products");
         const data = await res.json();
         setFeatured(data.slice(0, 10));

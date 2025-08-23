@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-
+import { API_BASE } from "../apiConfig";
 export default function ProductCard({ product, showToast }) {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
@@ -8,7 +8,7 @@ export default function ProductCard({ product, showToast }) {
     if (!token) return navigate("/login");
 
     try {
-      const res = await fetch("http://localhost:5000/api/cart", {
+      const res = await fetch(`${API_BASE}/api/cart`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

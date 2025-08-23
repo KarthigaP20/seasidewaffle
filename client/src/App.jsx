@@ -16,6 +16,7 @@ import AdminUsers from "./pages/AdminUsers";
 import ProductDetail from "./pages/ProductDetails";
 import Profile from "./pages/profile";
 import Favourites from "./pages/Favourites";
+import { API_BASE } from "./apiConfig";
 
 // 🔒 AdminRoute wrapper
 function AdminRoute({ children }) {
@@ -32,9 +33,9 @@ export default function App() {
 
   useEffect(() => {
     if (!token) return;
-    fetch("http://localhost:5000/api/cart", {
-      headers: { Authorization: `Bearer ${token}` },
-    })
+   fetch(`${API_BASE}/api/cart`, {
+  headers: { Authorization: `Bearer ${token}` },
+})
       .then((r) => (r.ok ? r.json() : []))
       .then((d) => setCart(d))
       .catch(() => {});
