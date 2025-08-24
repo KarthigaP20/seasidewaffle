@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import heroImg from "../assets/hero.jpg";
 import { API_BASE } from "../apiConfig";
+import About from "../components/About";
 import {
   FaChevronLeft,
   FaChevronRight,
@@ -230,6 +231,10 @@ export default function Home() {
           </button>
         </div>
       </section>
+
+        
+    {/* About Section */}
+    <About />
       </div>
   );
 }

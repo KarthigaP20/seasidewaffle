@@ -1,7 +1,7 @@
 export default function About() {
   return (
     <div>
-      <section className="w-full flex flex-col justify-center items-center px-4 py-10 bg-[#fdf6e3]">
+      <section className="w-full flex flex-col justify-center items-center px-4 py-10 bg-[#F0DEB7] shadow-lg">
         <h3 className="text-2xl md:text-3xl font-bold text-center text-gray-900">
           About Sea Side Waffle
         </h3>
