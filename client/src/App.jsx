@@ -17,7 +17,7 @@ import ProductDetail from "./pages/ProductDetails";
 import Profile from "./pages/profile";
 import Favourites from "./pages/Favourites";
 import { API_BASE } from "./apiConfig";
-
+import About from "./components/About"
 // 🔒 AdminRoute wrapper
 function AdminRoute({ children }) {
   const user = JSON.parse(localStorage.getItem("user")); // saved after login
@@ -99,6 +99,7 @@ export default function App() {
           <Route path="*" element={<Home />} />
         </Routes>
       </main>
+      <About />
       <Footer />
     </div>
   );

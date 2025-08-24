@@ -192,7 +192,7 @@ export default function Home() {
       </section>
 
       {/* Best Products Showcase */}
-      <section className="max-w-7xl mx-auto px-12 py-12 bg-[#f0deb7] rounded-xl mt-10">
+      <section className="max-w-7xl mx-auto px-12 py-12 bg-[#f0deb7] rounded-xl mt-10 mb-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
             Best of Sea Side Waffle
@@ -230,21 +230,7 @@ export default function Home() {
           </button>
         </div>
       </section>
-
-      {/* About */}
-      <section className="max-w-5xl mx-auto px-4 py-12">
-        <h3 className="text-2xl md:text-3xl font-bold text-center">
-          About Sea Side Waffle
-        </h3>
-        <p className="mt-4 text-gray-700 leading-relaxed text-center">
-          We’re a coastal waffle kitchen crafting small-batch Belgian waffles,
-          shakes, and snacks with locally-sourced ingredients. From sunrise
-          breakfast boxes to midnight chocolate cravings, our menu is designed
-          to delight. Dine-in, takeaway, or doorstep delivery — every bite comes
-          with a soothing hint of sea breeze.
-        </p>
-      </section>
-    </div>
+      </div>
   );
 }
 
