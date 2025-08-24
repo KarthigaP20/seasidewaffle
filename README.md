@@ -125,15 +125,14 @@ npm run dev
 
 Now visit: http://localhost:5173
 
-**Author**
+### Author
 
-**Karthiga P**  
+Karthiga P 
 - Full Stack Developer  
 - GitHub: [KarthigaP20](https://github.com/KarthigaP20)  
 
-**Feedback & Thank You**
+### Feedback & Thank You
 
 Thank you for visiting and exploring the Sea Side Waffle project.
 If you have suggestions or feedback, feel free to reach out via GitHub.
 Your input is always appreciated!
-
