@@ -83,6 +83,17 @@ Sea Side Waffle/
 │   ├── uploads/            # Uploaded product images
 │   └── server.js           # Entry point
 
+## Author
+
+Karthiga P  
+- Full Stack Developer  
+- GitHub: [KarthigaP20](https://github.com/KarthigaP20)  
+
+## Feedback & Thank You
+
+Thank you for visiting and exploring the Sea Side Waffle project.  
+If you have suggestions or feedback, feel free to reach out via GitHub. 
+
 ## Installation  
 
 ### Clone the repository  
@@ -125,14 +136,3 @@ npm run dev
 
 Now visit: http://localhost:5173
 
-### Author
-
-Karthiga P 
-- Full Stack Developer  
-- GitHub: [KarthigaP20](https://github.com/KarthigaP20)  
-
-### Feedback & Thank You
-
-Thank you for visiting and exploring the Sea Side Waffle project.
-If you have suggestions or feedback, feel free to reach out via GitHub.
-Your input is always appreciated!
