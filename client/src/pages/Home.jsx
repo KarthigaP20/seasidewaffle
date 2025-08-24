@@ -101,7 +101,7 @@ export default function Home() {
   };
 
   return (
-    <div className="flex flex-col bg-[#faeed8] w-screen">
+    <div className="flex flex-col bg-[#faeed8]">
       {/* Hero Section */}
       <section className="relative w-full bg-[#fcf3e0] overflow-hidden">
         {/* Top chocolate drip */}
