@@ -24,7 +24,7 @@ It allows customers to browse and order waffles online, while admins can manage 
 ### Admin Pages  
 | Admin Dashboard | Manage Products | Manage Orders | Manage Users |
 |-----------------|-----------------|---------------|--------------|
-| ![Admin Dashboard](client/public/Screenshots/adminpage.png) | ![Products](client/public/Screenshots/featuredprod.png) | ![Orders](client/public/Screenshots/checkoutpage.png) | ![Users](client/public/Screenshots/adminpage.png) |
+| ![Admin Dashboard](client/public/Screenshots/adminpage.png) | ![Products](client/public/Screenshots/featuredprod.png) | ![Orders](client/public/Screenshots/manageorderpage.png) | ![Users](client/public/Screenshots/manageuserpage.png) |
 
 ## Features  
 
@@ -125,13 +125,13 @@ npm run dev
 
 Now visit: http://localhost:5173
 
-## Author
+**Author**
 
 **Karthiga P**  
 - Full Stack Developer  
 - GitHub: [KarthigaP20](https://github.com/KarthigaP20)  
 
-## Feedback & Thank You
+**Feedback & Thank You**
 
 Thank you for visiting and exploring the Sea Side Waffle project.
 If you have suggestions or feedback, feel free to reach out via GitHub.
