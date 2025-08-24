@@ -193,7 +193,7 @@ export default function Home() {
       </section>
 
       {/* Best Products Showcase */}
-      <section className="max-w-7xl mx-auto px-12 py-12 bg-[#f0deb7] rounded-xl mt-10 mb-10">
+      <section className="max-w-full mx-auto px-12 py-12 bg-[#f0deb7] rounded-xl mt-10 mb-10">
         <div className="flex items-center justify-between mb-6">
           <h2 className="text-2xl md:text-3xl font-bold text-gray-900">
             Best of Sea Side Waffle
