@@ -57,7 +57,7 @@ export default function ProductForm({ product = {}, onSave }) {
       });
       const data = await res.json();
       setUploading(false);
-      if (res.ok) return `${API_BASE}${data.path}`;
+      if (res.ok) return `${API_BASE}${data.path}`.replace("http://", "https://");
       else {
         alert("Upload failed");
         return null;
