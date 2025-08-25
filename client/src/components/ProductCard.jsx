@@ -43,9 +43,13 @@ export default function ProductCard({ product, showToast }) {
   return (
     <div className="relative border rounded-lg p-4 shadow-md hover:shadow-lg transition duration-300">
       <img
-        src={ product.image.startsWith("http")
-      ? product.image
-      : `${API_BASE}${product.image}`}
+          src={
+    product.image
+      ? product.image.startsWith("http")
+        ? product.image // Cloudinary or external URL
+        : `${API_BASE}${product.image}` // fallback to local server path
+      : "/placeholder.png" // optional placeholder if no image
+  }
         alt={product.name}
         className="w-full h-48 object-cover rounded"
       />

@@ -56,8 +56,8 @@ export default function ProductForm({ product = {}, onSave }) {
         body: formData,
       });
       const data = await res.json();
-      setUploading(false);
-      if (res.ok) return `${API_BASE}${data.path}`.replace("http://", "https://");
+      setUploading(false);   if (res.ok) return data.path; // Cloudinary URL directly
+
       else {
         alert("Upload failed");
         return null;
