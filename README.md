@@ -55,7 +55,7 @@ It allows customers to browse and order waffles online, while admins can manage 
 **Backend (Server):**  
 - Node.js + Express.js  
 - MongoDB + Mongoose  
-- Multer (image uploads)  
+- Multer / Cloudinary (image uploads)  
 - JWT Authentication  
 - Nodemailer (order email service)  
 
@@ -63,8 +63,6 @@ It allows customers to browse and order waffles online, while admins can manage 
 - Frontend → Vercel  
 - Backend → Render  
 
-
-## Project Structure  
 
 Sea Side Waffle/
 ├── client/                 # React Frontend
@@ -75,13 +73,23 @@ Sea Side Waffle/
 │   └── Screenshots/        # Screenshots for documentation
 │
 ├── server/                 # Node/Express Backend
+│   ├── config/             # Configuration files
+│   │   └── cloudinary.js   # Cloudinary setup
 │   ├── controllers/        # Business logic (Products, Orders, Users, Cart)
 │   ├── models/             # Mongoose schemas
 │   ├── routes/             # API routes
 │   ├── middleware/         # Auth middleware
 │   ├── services/           # Email services
-│   ├── uploads/            # Uploaded product images
+│   ├── uploads/            # Uploaded product images (can switch to Cloudinary)
 │   └── server.js           # Entry point
+
+**Future Enhancements:**  
+- Payment Integration (Stripe / Razorpay / PayPal)  
+- Real-Time Order Tracking  
+- Advanced Admin Analytics  
+- Wishlist & Recommendations  
+- Multi-Language Support  
+- Dark Mode & UI Improvements  
 
 ## Author
 
@@ -120,6 +128,9 @@ JWT_SECRET=your_secret_key
 EMAIL_USER=your_email
 EMAIL_PASS=your_email_password
 CLIENT_URL=https://seasidewaffle.vercel.app
+CLOUDINARY_CLOUD_NAME=your_cloud_name
+CLOUDINARY_API_KEY=your_api_key
+CLOUDINARY_API_SECRET=your_api_secret
 
 In client/.env
 VITE_API_URL=https://seasidewaffle-server.onrender.com
