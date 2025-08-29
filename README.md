@@ -131,9 +131,11 @@ CLIENT_URL=https://seasidewaffle.vercel.app
 CLOUDINARY_CLOUD_NAME=your_cloud_name
 CLOUDINARY_API_KEY=your_api_key
 CLOUDINARY_API_SECRET=your_api_secret
+CLIENT_URL=http://localhost:5173
 
 In client/.env
 VITE_API_URL=https://seasidewaffle-server.onrender.com
+VITE_API_URL=http://localhost:5000
 
 Run the project
 
